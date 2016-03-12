@@ -1,0 +1,14 @@
+indexes:
+
+- kind: Weather
+  properties:
+  - name: a
+  - name: b
+  - name: c
+
+- kind: Weather_crotoy
+  properties:
+  - name: a
+  - name: b
+  - name: c
+
