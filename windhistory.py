@@ -30,6 +30,12 @@ class Weather_crotoy(ndb.Model):
     updateheure  = ndb.StringProperty('b')
     updateminute = ndb.StringProperty('c')
 
+class PortableAnemometer(ndb.Model):
+    date         = ndb.DateTimeProperty('d',auto_now_add=True)
+    vitesse      = ndb.IntegerProperty('v')
+    updateday    = ndb.StringProperty('a')
+    updateheure  = ndb.StringProperty('b')
+    updateminute = ndb.StringProperty('c')
 
 class WindHistory(webapp2.RequestHandler):
     def post(self):
@@ -55,6 +61,11 @@ class WindHistory(webapp2.RequestHandler):
             qry2 = qry1.filter(ndb.AND(Weather_crotoy.updateheure >= SelectedStartHour,Weather_crotoy.updateheure < SelectedEndHourQuery))
             qry3 = qry2.order(Weather_crotoy.updateheure,Weather_crotoy.updateminute)
 
+        if SelectedSpot=="Mobile Anemometer":
+            qry1 = PortableAnemometer.query(PortableAnemometer.updateday == SelectedDate)
+            qry2 = qry1.filter(ndb.AND(PortableAnemometer.updateheure >= SelectedStartHour,PortableAnemometer.updateheure < SelectedEndHourQuery))
+            qry3 = qry2.order(PortableAnemometer.updateheure,PortableAnemometer.updateminute)
+
         if SelectedGraph=="Graphe de la vitesse du vent":
             ListeHeure = []
             ListeVentVitesse = []
@@ -72,6 +83,8 @@ class WindHistory(webapp2.RequestHandler):
             matplotlib.pyplot.title("Vitesse du vent à Léry-Poses, le ".decode('utf-8') + SelectedDateFrench)
             if SelectedSpot=="Le Crotoy":
                 matplotlib.pyplot.title("Vitesse du vent à Le Crotoy, le ".decode('utf-8') + SelectedDateFrench)
+            if SelectedSpot=="Mobile Anemometer":
+                matplotlib.pyplot.title("Vitesse du vent sur l'anémomètre portable, le ".decode('utf-8') + SelectedDateFrench)
 
             matplotlib.pyplot.xlabel('Temps')
             if (SelectedUnit=="km/h"):

@@ -12,3 +12,9 @@ indexes:
   - name: b
   - name: c
 
+- kind: PortableAnemometer
+  properties:
+  - name: a
+  - name: b
+  - name: c
+

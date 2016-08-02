@@ -54,6 +54,7 @@ Spot:
 <select name="S_Spot" id="Spot">
 <option value="Le Crotoy">Le Crotoy</option>
 <option value="Lery-Poses" selected>L&#233ry-Poses</option>
+<option value="Mobile Anemometer">An&#233mom&#232tre portable</option>
 </select>
 
 <br><br>

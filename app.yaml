@@ -38,6 +38,9 @@ handlers:
 - url: /winddump
   script: winddump.app
 
+- url: /getwindspeed
+  script: getwindspeed.app
+
 - url: /tasks/updateweatherdb
   script: updateweatherdb.app
   login: admin
