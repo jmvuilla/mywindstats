@@ -132,10 +132,10 @@ class WindTable(webapp2.RequestHandler):
                     self.response.write('%2s</td>' % ientity.updateminute)
                     if SelectedUnit=="km/h":
                         ivitesse = ientity.vitesse
-
+                        self.response.write('<td>%5d</td>' % (ivitesse))
                     if SelectedUnit=="noeud":
                         ivitesse = ientity.vitesse/1.852
-                    self.response.write('<td>%3d</td>' % int(round(ivitesse)))
+                        self.response.write('<td>%5.1f</td>' % (round(ivitesse,1)))
                     self.response.write('<td>%3s</td>' % ientity.direction)
                     sumvitesse = sumvitesse + ivitesse
                     sumsqvitesse = sumsqvitesse + ivitesse*ivitesse

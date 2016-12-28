@@ -598,7 +598,8 @@ def index(request,dateplagehoraire):
                 if (UniteVitesse=="km/h"):
                     ListeVentVitesse.append(row.vitesse)
                 if (UniteVitesse=="noeud"):
-                    ListeVentVitesse.append(int(str(round(row.vitesse/1.852))))
+                    #ListeVentVitesse.append(int(str(round(row.vitesse/1.852))))
+                    ListeVentVitesse.append(round(row.vitesse/1.852,1))
 
     if all(ijmv==-1 for ijmv in ListeVentDirection):
        return HttpResponse("""
@@ -683,7 +684,7 @@ class WindRose(webapp2.RequestHandler):
                 if SelectedUnit=="km/h":
                     ListeVentVitesse.append(ientity.vitesse)
                 if SelectedUnit=="noeud":
-                    ListeVentVitesse.append(int(round(ientity.vitesse/1.852)))
+                    ListeVentVitesse.append(round(ientity.vitesse/1.852,1))
             
             self.response.write('<html>')
             self.response.write("""

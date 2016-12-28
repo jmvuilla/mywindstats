@@ -89,7 +89,7 @@ class ShortTermForecast(webapp2.RequestHandler):
                     ListeVentVitesseAjustee = ListeVentVitesse
                 if (SelectedUnit=="noeud"):
                     matplotlib.pyplot.ylabel('Vitesse (noeud)')
-                    ListeVentVitesseAjustee = [int(round(l/1.852)) for l in ListeVentVitesse] 
+                    ListeVentVitesseAjustee = [round(l/1.852,1) for l in ListeVentVitesse] 
                 matplotlib.pyplot.grid(True)
                 matplotlib.pyplot.plot(ListeHeureFmt,ListeVentVitesseAjustee,linewidth=0.4,label=u"Relevés")
                 # Linear interpolation of the data in order to have wind speed every minutes
@@ -123,11 +123,11 @@ class ShortTermForecast(webapp2.RequestHandler):
                     M3_v2_ListeVentVitessePredictionAjustee = model_M3_v2.ListeVentVitessePrediction
                     M6_ListeVentVitessePredictionAjustee = model_M6.ListeVentVitessePrediction
                 if (SelectedUnit=="noeud"):
-                    M1_ListeVentVitessePredictionAjustee = [int(round(l/1.852)) for l in model_M1.ListeVentVitessePrediction]
-                    M2_ListeVentVitessePredictionAjustee = [int(round(l/1.852)) for l in model_M2.ListeVentVitessePrediction] 
-                    M3_ListeVentVitessePredictionAjustee = [int(round(l/1.852)) for l in model_M3.ListeVentVitessePrediction]
-                    M3_v2_ListeVentVitessePredictionAjustee = [int(round(l/1.852)) for l in model_M3_v2.ListeVentVitessePrediction]
-                    M6_ListeVentVitessePredictionAjustee = [int(round(l/1.852)) for l in model_M6.ListeVentVitessePrediction]
+                    M1_ListeVentVitessePredictionAjustee = [round(l/1.852,1) for l in model_M1.ListeVentVitessePrediction]
+                    M2_ListeVentVitessePredictionAjustee = [round(l/1.852,1) for l in model_M2.ListeVentVitessePrediction] 
+                    M3_ListeVentVitessePredictionAjustee = [round(l/1.852,1) for l in model_M3.ListeVentVitessePrediction]
+                    M3_v2_ListeVentVitessePredictionAjustee = [round(l/1.852,1) for l in model_M3_v2.ListeVentVitessePrediction]
+                    M6_ListeVentVitessePredictionAjustee = [round(l/1.852,1) for l in model_M6.ListeVentVitessePrediction]
 
                 #matplotlib.pyplot.plot(model_M1.ListeHeureFmtPrediction,M1_ListeVentVitessePredictionAjustee,linewidth=0.4,color='r',label=u"Prévisions - M1")
                 #matplotlib.pyplot.plot(model_M2.ListeHeureFmtPrediction,M2_ListeVentVitessePredictionAjustee,linewidth=0.8,color='r',label=u"Prévisions - M2")
