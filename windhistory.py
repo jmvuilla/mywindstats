@@ -74,7 +74,7 @@ class WindHistory(webapp2.RequestHandler):
                 if SelectedUnit=="km/h":
                     ListeVentVitesse.append(ientity.vitesse)
                 if SelectedUnit=="noeud":
-                    ListeVentVitesse.append(int(round(ientity.vitesse/1.852)))
+                    ListeVentVitesse.append(round(ientity.vitesse/1.852,1))
 
             ListeHeureFmt = [datetime.datetime.strptime(DateIndex,"%Y-%m-%d %H:%M:%S") for DateIndex in ListeHeure]
 
