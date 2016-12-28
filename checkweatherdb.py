@@ -2,6 +2,7 @@ import webapp2
 from google.appengine.api import mail
 from google.appengine.ext import ndb
 import datetime
+from pytz.gae import pytz
 
 class Weather(ndb.Model):
     direction    = ndb.StringProperty('i')
@@ -30,8 +31,10 @@ class Weather_crotoy(ndb.Model):
 class MainPage(webapp2.RequestHandler):
     def get(self):
         CurrentTime = datetime.datetime.now()
-        SelectedDate = CurrentTime.strftime("%Y-%m-%d")
-        SelectedHour = CurrentTime.strftime("%H")
+        Paris = pytz.timezone('Europe/Paris')
+        LocalCurrentTime = pytz.timezone('UTC').localize(CurrentTime).astimezone(Paris)
+        SelectedDate = LocalCurrentTime.strftime("%Y-%m-%d")
+        SelectedHour = LocalCurrentTime.strftime("%H")
         SelectedMinute = CurrentTime.strftime("%M")
  
         qry1 = Weather.query(Weather.updateday == SelectedDate)
@@ -45,9 +48,9 @@ class MainPage(webapp2.RequestHandler):
             LastUpdateHour   = int(ientity.updateheure)
             LastUpdateMinute = int(ientity.updateminute)
             LastUpdateTime   = datetime.datetime(LastUpdateYear,LastUpdateMonth,LastUpdateDay,LastUpdateHour,LastUpdateMinute)
-            Diff = CurrentTime - LastUpdateTime
+            #Diff = LocalCurrentTime - LastUpdateTime
 
-        EmailBody = "Lery-Poses: " + CurrentTime.strftime("%Y-%m-%d %H:%M")
+        EmailBody = "Lery-Poses: " + LocalCurrentTime.strftime("%Y-%m-%d %H:%M") + " " + LastUpdateTime.strftime("%Y-%m-%d %H:%M") 
         mail.send_mail(sender="weighty-wonder-91207@appspot.gserviceaccount.com" ,
                       to="Jean-Michel Vuillamy <jmvuilla@gmail.com>",
                       subject="Weather station data collection issue",
