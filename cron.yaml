@@ -7,4 +7,4 @@ cron:
   schedule: every 1 minutes
 - description: regular check of incoming data from Lery-Poses
   url: /tasks/checkweatherdb
-  schedule: every 15 minutes 
+  schedule: every 15 minutes from 00:14 to 23:59
