@@ -48,13 +48,15 @@ class MainPage(webapp2.RequestHandler):
             LastUpdateHour   = int(ientity.updateheure)
             LastUpdateMinute = int(ientity.updateminute)
             LastUpdateTime   = datetime.datetime(LastUpdateYear,LastUpdateMonth,LastUpdateDay,LastUpdateHour,LastUpdateMinute)
-            #Diff = LocalCurrentTime - LastUpdateTime
+            LocalLastUpdateTime = Paris.localize(LastUpdateTime)
+            Diff = int(round((LocalCurrentTime - LocalLastUpdateTime).total_seconds()/60))
 
-        EmailBody = "Lery-Poses: " + LocalCurrentTime.strftime("%Y-%m-%d %H:%M") + " " + LastUpdateTime.strftime("%Y-%m-%d %H:%M") 
-        mail.send_mail(sender="weighty-wonder-91207@appspot.gserviceaccount.com" ,
-                      to="Jean-Michel Vuillamy <jmvuilla@gmail.com>",
-                      subject="Weather station data collection issue",
-                      body=EmailBody)
+        if (Diff>=5):
+            EmailBody = "Lery-Poses:\n\tLocal current time = " + LocalCurrentTime.strftime("%Y-%m-%d %H:%M") + "\n\tLast local update time = " + LastUpdateTime.strftime("%Y-%m-%d %H:%M") + "\n\tDelta time (mn) = " + str(Diff)
+            mail.send_mail(sender="weighty-wonder-91207@appspot.gserviceaccount.com" ,
+                          to="Jean-Michel Vuillamy <jmvuilla@gmail.com>",
+                          subject="Weather station data collection issue",
+                          body=EmailBody)
 
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.http_status_message(200)
