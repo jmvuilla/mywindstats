@@ -53,7 +53,7 @@ class MainPage(webapp2.RequestHandler):
                 NumberOfSamples = NumberOfSamples + 1
 
         # For Lery-Poses, 2 samples every 3mn. This translates into about 10 samples during a 15mn period
-        if (NumberOfSamples < 10):
+        if (NumberOfSamples < 9):
             EmailBody = "Lery-Poses:\n\tLocal current time = " + LocalCurrentTime.strftime("%Y-%m-%d %H:%M") + "\n\tNumber of samples during the last 15mn: " + str(NumberOfSamples)
             mail.send_mail(sender="weighty-wonder-91207@appspot.gserviceaccount.com" ,
                           to="Jean-Michel Vuillamy <jmvuilla@gmail.com>",
