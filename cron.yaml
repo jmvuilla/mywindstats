@@ -2,9 +2,12 @@ cron:
 - description: regular update of weather database for Lery-Poses
   url: /tasks/updateweatherdb
   schedule: every 1 minutes
+  login: admin
 - description: regular update of weather database for Le Crotoy
   url: /tasks/updateweatherdb_crotoy
   schedule: every 1 minutes
+  login: admin
 - description: regular check of incoming data from Lery-Poses
   url: /tasks/checkweatherdb
   schedule: every 15 minutes from 00:14 to 23:59
+  login: admin
