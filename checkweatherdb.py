@@ -33,26 +33,28 @@ class MainPage(webapp2.RequestHandler):
         CurrentTime = datetime.datetime.now()
         Paris = pytz.timezone('Europe/Paris')
         LocalCurrentTime = pytz.timezone('UTC').localize(CurrentTime).astimezone(Paris)
-        SelectedDate = LocalCurrentTime.strftime("%Y-%m-%d")
-        SelectedHour = LocalCurrentTime.strftime("%H")
-        SelectedMinute = CurrentTime.strftime("%M")
+        SelectedDate   = LocalCurrentTime.strftime("%Y-%m-%d")
+        SelectedHour   = LocalCurrentTime.strftime("%H")
+        SelectedMinute = LocalCurrentTime.strftime("%M")
  
         qry1 = Weather.query(Weather.updateday == SelectedDate)
         qry2 = qry1.filter(Weather.updateheure == SelectedHour)
         qry3 = qry2.order(Weather.updateheure,Weather.updateminute)
 
-        for ientity in qry3:
-            LastUpdateYear   = int(ientity.updateday[0:4])
-            LastUpdateMonth  = int(ientity.updateday[5:7])
-            LastUpdateDay    = int(ientity.updateday[8:10])
-            LastUpdateHour   = int(ientity.updateheure)
-            LastUpdateMinute = int(ientity.updateminute)
-            LastUpdateTime   = datetime.datetime(LastUpdateYear,LastUpdateMonth,LastUpdateDay,LastUpdateHour,LastUpdateMinute)
-            LocalLastUpdateTime = Paris.localize(LastUpdateTime)
-            Diff = int(round((LocalCurrentTime - LocalLastUpdateTime).total_seconds()/60))
+        Samples = [False]*60
 
-        if (Diff>=5):
-            EmailBody = "Lery-Poses:\n\tLocal current time = " + LocalCurrentTime.strftime("%Y-%m-%d %H:%M") + "\n\tLast local update time = " + LastUpdateTime.strftime("%Y-%m-%d %H:%M") + "\n\tDelta time (mn) = " + str(Diff)
+        for ientity in qry3:
+            Samples[int(ientity.updateminute)] = True
+
+        IntSelectedMinute = int(SelectedMinute)
+        NumberOfSamples   = 0
+        for I in range(IntSelectedMinute-14,IntSelectedMinute+1):
+            if (Samples[I]):
+                NumberOfSamples = NumberOfSamples + 1
+
+        # For Lery-Poses, 3 samples every 4mn. This translates into about 11 samples during a 15mn period
+        if (NumberOfSamples < 11):
+            EmailBody = "Lery-Poses:\n\tLocal current time = " + LocalCurrentTime.strftime("%Y-%m-%d %H:%M") + "\n\tNumber of samples during the last 15mn: " + str(NumberOfSamples)
             mail.send_mail(sender="weighty-wonder-91207@appspot.gserviceaccount.com" ,
                           to="Jean-Michel Vuillamy <jmvuilla@gmail.com>",
                           subject="Weather station data collection issue",
