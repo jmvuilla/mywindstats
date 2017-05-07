@@ -10,7 +10,8 @@ class PortableAnemometer(ndb.Model):
     updateday    = ndb.StringProperty('a')
     updateheure  = ndb.StringProperty('b')
     updateminute = ndb.StringProperty('c')
-    voltage      = ndb.FloatProperty('u')
+    voltage      = ndb.IntegerProperty('u')
+    temperature  = ndb.IntegerProperty('t')
 
 class GetWindSpeed(webapp2.RequestHandler):
     def post(self):
@@ -28,9 +29,10 @@ class GetWindSpeed(webapp2.RequestHandler):
                       cgi.escape(self.request.get('slot_ws7')),       
                       cgi.escape(self.request.get('slot_ws8')),
                       cgi.escape(self.request.get('slot_ws9'))]
-        SelectedVolth = float(cgi.escape(self.request.get('slot_volth')))
-        SelectedVoltl = float(cgi.escape(self.request.get('slot_voltl')))
-        voltage = (SelectedVolth*256.0+SelectedVoltl)*5.0/1023.0
+        SelectedVolt = cgi.escape(self.request.get('slot_volt'))
+        SelectedTemp = cgi.escape(self.request.get('slot_temp'))
+        voltage = SelectedVolt*16
+        temperature = SelectedTemp*4-300
 
         dtnow = datetime.datetime.now()
         utc=pytz.utc
@@ -42,7 +44,7 @@ class GetWindSpeed(webapp2.RequestHandler):
             updateday = local_dt.strftime("%Y-%m-%d")
             updateheure = local_dt.strftime("%H")
             updateminute = local_dt.strftime("%M")
-            newentity = PortableAnemometer(date=dtnow, vitesse=int(SelectedWS[i]), updateday=updateday, updateheure=updateheure, updateminute=updateminute, voltage=voltage)
+            newentity = PortableAnemometer(date=dtnow, vitesse=int(SelectedWS[i]), updateday=updateday, updateheure=updateheure, updateminute=updateminute, voltage=voltage, temperature=temperature)
             newentity.put()
 
 app = webapp2.WSGIApplication([('/getwindspeed',GetWindSpeed)], debug=True)
