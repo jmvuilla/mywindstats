@@ -31,8 +31,8 @@ class GetWindSpeed(webapp2.RequestHandler):
                       cgi.escape(self.request.get('slot_ws9'))]
         SelectedVolt = cgi.escape(self.request.get('slot_volt'))
         SelectedTemp = cgi.escape(self.request.get('slot_temp'))
-        voltage = SelectedVolt*16
-        temperature = SelectedTemp*4-300
+        voltage = int(SelectedVolt)*16
+        temperature = int(SelectedTemp)*4-300
 
         dtnow = datetime.datetime.now()
         utc=pytz.utc
