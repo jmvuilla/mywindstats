@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import cgi
 from google.appengine.ext import ndb
 import webapp2
