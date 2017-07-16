@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import cgi
 import webapp2
 
@@ -118,10 +119,10 @@ Heure (d&#233but):
 <br><br><br>
 <input type="submit" name="S_Graphe"                          value="Graphe de la vitesse du vent">
 <input type="submit" formaction="/windrose" name="S_Graphe"   value="   Rose des vents   ">
-<input type="submit" formaction="/allhistory" name="S_Graphe" value="Graphes des données météo"><br><br>
-<input type="submit" formaction="/windtable" name="S_Graphe"  value="Tableau des données météo">
+<input type="submit" formaction="/allhistory" name="S_Graphe" value="Graphes des donn&#233;es m&#233;t&#233;o"><br><br>
+<input type="submit" formaction="/windtable" name="S_Graphe"  value="Tableau des donn&#233;es m&#233;t&#233;o">
 <input type="submit" formaction="/faq" name="S_Graphe"        value="Foire aux questions">
-<input type="submit" formaction="/shorttermforecast" name="S_Graphe"  value="Prévision du vent dans l'heure"><br><br>
+<input type="submit" formaction="/shorttermforecast" name="S_Graphe"  value="Pr&#233;vision du vent dans l'heure"><br><br>
 <!--<input type="submit" formaction="/winddump" name="S_Graphe"       value="Dump"><br><br>-->
 <select name="S_Unit" id="Unit">
 <option value="km/h">km/h</option>
